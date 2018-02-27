@@ -15,4 +15,13 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/projectStore', 'ProjectController@store');
+
+Route::get('/managerStore', 'ManagerController@store');
+
+Route::get('/addProject', 'ManagerController@addProject');
+
+Route::get('/showProject', 'ProjectController@show');
+
+Route::get('/showManager', 'ManagerController@show');
 
