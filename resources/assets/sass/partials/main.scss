@@ -1,3 +1,28 @@
 @import 'fonts';
 @import 'header';
 @import 'footer';
+
+html {
+  height: 100%;
+}
+
+body {
+  padding-top: 54px;
+  height: inherit;
+}
+
+.container {
+  height: inherit;
+}
+
+.id-request::-webkit-input-placeholder { color: red; }
+.id-request:-moz-placeholder { color: red; }
+.id-request::-moz-placeholder { color: red; }
+.id-request:-ms-input-placeholder { color: red; }
+.id-request::-ms-input-placeholder { color: red; }
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}

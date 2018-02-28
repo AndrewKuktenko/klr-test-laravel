@@ -11,11 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'IndexController@index');
 
-Route::get('/projectStore', 'ProjectController@store');
+Route::post('/addProject', 'ProjectController@store');
+
+Route::post('/updateProject', 'ProjectController@update');
+
+//Route::get('/projectStore', 'ProjectController@store');
 
 Route::get('/managerStore', 'ManagerController@store');
 
