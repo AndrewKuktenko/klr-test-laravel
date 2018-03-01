@@ -55,3 +55,86 @@ global.validateCreateForm = function() {
         alert("Price must be filled out");
     }
 }
+
+function readURL(input) {
+    switch (input.name) {
+        case 'managerPhoto':
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            break;
+        case 'managerPhotoUpd':
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#previewUpd').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            break;
+    }
+}
+
+$("#managerPhoto").change(function() {
+    readURL(this);
+});
+
+$("#managerPhotoUpd").change(function() {
+    readURL(this);
+});
+
+$('.ajax-projects').click(function (e) {
+
+    var id = this.id;
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: '/getManagers',
+        method: 'POST',
+        data: { id:id },
+        datatype: 'html',
+        success: function(response){
+            $('#'+id + ' .project-manager').html(response.html);
+        },
+        error: function(textStatus, errorThrown) {
+            console.log("Error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+});
+
+$('.ajax-managers').click(function (e) {
+
+    var id = this.id;
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: '/getProjects',
+        method: 'POST',
+        data: { id:id },
+        datatype: 'html',
+        success: function(response){
+            $('#'+id + ' .manager-project').html(response.html);
+        },
+        error: function(textStatus, errorThrown) {
+            console.log("Error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+});

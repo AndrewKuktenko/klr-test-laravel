@@ -11,19 +11,24 @@
 |
 */
 
-Route::get('/', 'IndexController@index');
+Route::get('/', 'IndexController@index')->name('manager');
+
+Route::post('/addManager', 'ManagerController@store');
+
+Route::post('/updateManager', 'ManagerController@update');
+
+Route::get('/manager-list', 'ManagerController@show')->name('managerList');
+
+Route::post('/getProjects', 'ManagerController@findProjectsById');
+
+Route::get('/project','ProjectController@index')->name('project');
 
 Route::post('/addProject', 'ProjectController@store');
 
 Route::post('/updateProject', 'ProjectController@update');
 
-//Route::get('/projectStore', 'ProjectController@store');
+Route::get('/project-list', 'ProjectController@show')->name('projectList');
 
-Route::get('/managerStore', 'ManagerController@store');
+Route::post('/getManagers', 'ProjectController@findManagersById');
 
-Route::get('/addProject', 'ManagerController@addProject');
-
-Route::get('/showProject', 'ProjectController@show');
-
-Route::get('/showManager', 'ManagerController@show');
 

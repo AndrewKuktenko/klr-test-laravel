@@ -4,7 +4,7 @@
     <!-- Page Content -->
     <div class="container">
         <div class="row">
-            @include('layouts.sections.managers.edit')
+            @include('layouts.sections.projects.edit')
         </div>
     </div>
     <!-- /.container -->

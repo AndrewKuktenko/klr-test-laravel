@@ -13,16 +13,22 @@ use App\Manager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\File\File;
 use Validator;
 
 
 class ProjectController extends Controller
 {
+
+    public function index() {
+        return view('project');
+    }
+
     public function store(Request $request)
     {
 
         $validator = Validator::make($request->all(), [
-            'projectPrice' => 'required|integer ',
+            'projectPrice' => 'required|integer',
             'projectExecutor' => 'required|max:255',
             'startAt' => 'required|date',
             'finishAt' => 'required|date',
@@ -77,6 +83,8 @@ class ProjectController extends Controller
             }
         }
 
+        return back()->withInput();
+
     }
 
     public function update(Request $request) {
@@ -100,7 +108,7 @@ class ProjectController extends Controller
 
                 if($exists === null) {
                     return redirect('/')
-                        ->withErrors('No such executors id!')
+                        ->withErrors("No such project id as $id!")
                         ->withInput();
                 }
 
@@ -147,17 +155,29 @@ class ProjectController extends Controller
                 ]);
         }
 
+        return back()->withInput();
+
     }
 
     public function show()
     {
-        $manager = Manager::find(2);
 
-        foreach ($manager->projects as $project)
-        {
-            echo '<pre>';
-            echo $project;
-            echo '</pre>';
-        }
+        $projects = Project::all();
+
+        return view('projects', ['projects' => $projects]);
+        
+    }
+
+    public function findManagersById(Request $request)
+    {
+        $id = $request->id;
+
+        $project = Project::find($id);
+
+        $managers = $project->managers;
+
+        $returnHTML = view('layouts.sections.projects.load',['managers'=> $managers])->render();
+        return response()->json(['success' => true, 'html'=>$returnHTML]);
+
     }
 }
